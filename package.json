@@ -8,6 +8,13 @@
   "activationCommands": {
     "atom-workspace": "pomodoro-app:toggle"
   },
+  "consumedServices": {
+    "status-bar": {
+      "versions": {
+        "^1.0.0": "consumeStatusBar"
+      }
+    }
+  },
   "repository": "https://github.com/atom/pomodoro-app",
   "license": "MIT",
   "engines": {
