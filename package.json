@@ -1,0 +1,18 @@
+{
+  "name": "pomodoro-app",
+  "main": "./lib/pomodoro-app",
+  "version": "0.0.0",
+  "description": "A short description of your package",
+  "keywords": [
+  ],
+  "activationCommands": {
+    "atom-workspace": "pomodoro-app:toggle"
+  },
+  "repository": "https://github.com/atom/pomodoro-app",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+  }
+}
