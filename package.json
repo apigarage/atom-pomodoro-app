@@ -1,13 +1,15 @@
 {
   "name": "pomodoro-app",
-  "main": "./lib/pomodoro-app",
+  "main": "./lib/index",
   "version": "0.0.0",
-  "description": "A short description of your package",
+  "description": "Provides easy pomodoro productivity right in the editor.",
   "keywords": [
+    "productivity",
+    "efficiency",
+    "speed",
+    "pomodoro",
+    "timer"
   ],
-  "activationCommands": {
-    "atom-workspace": "pomodoro-app:toggle"
-  },
   "consumedServices": {
     "status-bar": {
       "versions": {

@@ -8,7 +8,7 @@ class PomodoroAppView
 
     # Create message element
     message = document.createElement('div')
-    message.textContent = "The PomodoroApp package is Alive! It's ALIVE!"
+    message.textContent = "20:13"
     message.classList.add('message')
     @element.appendChild(message)
 
