@@ -5,8 +5,7 @@ class PomodoroAppView
     @element = document.createElement('div')
     @element.classList.add('pomodoro-app')
     @element.classList.add('inline-block')
-    @timer = atom.config.get "pomodoro-app.startTime"
-    @timer += ":00"
+    @timer = atom.config.get("pomodoro-app.startTime.minute") + ":" + atom.config.get("pomodoro-app.startTime.second")
     # Create message element
     message = document.createElement('div')
     message.id = "timer"
