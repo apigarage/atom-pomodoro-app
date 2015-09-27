@@ -4,22 +4,43 @@ PomodoroAppView = require './pomodoro-app-view'
 module.exports = PomodoroApp =
   config:
     startTime:
-      type: 'integer'
-      default: 25
-      minimum: 0
+      title: 'Start Time'
+      type: 'object'
+      properties:
+        minute:
+          type: 'integer'
+          default: 25
+          minimum: 0
+          maximum: 59
+        second:
+          type: 'integer'
+          default: 0
+          maximum: 59
     smallBreak:
-      type: 'integer'
-      default: 5
-      minimum: 0
+      type: 'object'
+      properties:
+        minute:
+          type: 'integer'
+          default: 25
+          maximum: 59
+        second:
+          type: 'integer'
+          default: 0
+          maximum: 59
     longBreak:
-      type: 'integer'
-      default: 30
-      minimum: 0
-
+      type: 'object'
+      properties:
+        minute:
+          type: 'integer'
+          default: 25
+          maximum: 59
+        second:
+          type: 'integer'
+          default: 0
+          maximum: 59
   pomodoroAppView: null
   # subscriptions: null
   localStatusBarTile: null
-  
   activate: (state) ->
     @pomodoroAppView = new PomodoroAppView(state.pomodoroAppViewState)
 
