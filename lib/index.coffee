@@ -4,45 +4,20 @@ PomodoroAppView = require './pomodoro-app-view'
 module.exports = PomodoroApp =
   config:
     startTime:
-      title: 'Start Time'
-      type: 'object'
-      properties:
-        minute:
-          type: 'integer'
-          default: 25
-          minimum: 0
-          maximum: 60
-        second:
-          type: 'integer'
-          default: 0
-          minimum: 0
-          maximum: 60
+      type: 'integer'
+      default: 25
+      minimum: 0
+      maximum: 60
     smallBreak:
-      type: 'object'
-      properties:
-        minute:
-          type: 'integer'
-          default: 25
-          minimum: 0
-          maximum: 60
-        second:
-          type: 'integer'
-          default: 0
-          minimum: 0
-          maximum: 60
+      type: 'integer'
+      default: 5
+      minimum: 0
+      maximum: 60
     longBreak:
-      type: 'object'
-      properties:
-        minute:
-          type: 'integer'
-          default: 25
-          minimum: 0
-          maximum: 60
-        second:
-          type: 'integer'
-          default: 0
-          minimum: 0
-          maximum: 60
+      type: 'integer'
+      default: 25
+      minimum: 0
+      maximum: 60
 
   pomodoroAppView: null
   # subscriptions: null
