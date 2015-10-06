@@ -11,33 +11,38 @@ module.exports = PomodoroApp =
           type: 'integer'
           default: 25
           minimum: 0
-          maximum: 59
+          maximum: 60
         second:
           type: 'integer'
           default: 0
-          maximum: 59
+          minimum: 0
+          maximum: 60
     smallBreak:
       type: 'object'
       properties:
         minute:
           type: 'integer'
           default: 25
-          maximum: 59
+          minimum: 0
+          maximum: 60
         second:
           type: 'integer'
           default: 0
-          maximum: 59
+          minimum: 0
+          maximum: 60
     longBreak:
       type: 'object'
       properties:
         minute:
           type: 'integer'
           default: 25
-          maximum: 59
+          minimum: 0
+          maximum: 60
         second:
           type: 'integer'
           default: 0
-          maximum: 59
+          minimum: 0
+          maximum: 60
 
   pomodoroAppView: null
   # subscriptions: null
