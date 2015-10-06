@@ -2,10 +2,26 @@ PomodoroAppView = require './pomodoro-app-view'
 {CompositeDisposable} = require 'atom'
 
 module.exports = PomodoroApp =
+  config:
+    startTime:
+      type: 'integer'
+      default: 25
+      minimum: 0
+      maximum: 60
+    smallBreak:
+      type: 'integer'
+      default: 5
+      minimum: 0
+      maximum: 60
+    longBreak:
+      type: 'integer'
+      default: 25
+      minimum: 0
+      maximum: 60
+
   pomodoroAppView: null
   # subscriptions: null
   localStatusBarTile: null
-
   activate: (state) ->
     @pomodoroAppView = new PomodoroAppView(state.pomodoroAppViewState)
 
