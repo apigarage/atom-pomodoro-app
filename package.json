@@ -1,5 +1,5 @@
 {
-  "name": "pomodoro-app",
+  "name": "atom-pomodoro-app",
   "main": "./lib/index",
   "version": "0.0.0",
   "description": "Provides easy pomodoro productivity right in the editor.",
