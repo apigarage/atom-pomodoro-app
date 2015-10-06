@@ -38,6 +38,7 @@ module.exports = PomodoroApp =
           type: 'integer'
           default: 0
           maximum: 59
+
   pomodoroAppView: null
   # subscriptions: null
   localStatusBarTile: null
