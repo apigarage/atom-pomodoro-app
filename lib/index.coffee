@@ -23,14 +23,15 @@ module.exports = PomodoroApp =
   pomodoroAppView: null
   subscriptions: null
   localStatusBarTile: null
-  timerOn: false
+  timerState: 'D'
 
   activate: (state) ->
     @pomodoroAppView = new PomodoroAppView(state.pomodoroAppViewState)
     @subscriptions = new CompositeDisposable
-    @subscriptions.add atom.commands.add 'atom-workspace', 'atom-pomodoro-app:toggle': => @toggle()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'atom-pomodoro-app:toggleTimer': => @toggleTimer()
     @subscriptions.add atom.commands.add 'atom-workspace', 'atom-pomodoro-app:stopTimer': => @stopTimer()
 
+    timerState:'D'
     # This code will be used for registering commands (using ctrl+shift+p).
     # # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     # @subscriptions = new CompositeDisposable
@@ -41,7 +42,7 @@ module.exports = PomodoroApp =
 
   deactivate: ->
     # @subscriptions.dispose()
-    @pomodoroAppView.destroy()
+    @pomodoroAppView.destroy() # All hell goes loose
     @statusBarTile?.destroy()
     @statusBarTile = null
 
@@ -52,12 +53,12 @@ module.exports = PomodoroApp =
     @localStatusBarTile = statusBar.addRightTile(item: this.pomodoroAppView.getElement(), priority: 100)
 
   toggleTimer: ->
-    console.log if @DEBUG and @timerOn then 'Timer off' else 'Timer on'
-    @timerOn = if @timerOn then false else true
+    console.log if @DEBUG and (@timerState is 'D' or @timerState is 'P') then 'Timer running' else 'Timer paused'
+    @timerState = if (@timerState is 'D' or @timerState is 'P') then 'R' else 'P'
 
   stopTimer: ->
-    console.log if @DEBUG and @timerOn then 'Timer off' else 'Timer reset'
-    @timerOn = if @timerOn then false else false #placeholder
+    if @DEBUG and (@timerState is 'R' or @timerState is 'P') then console.log 'Timer off'
+    @timerState = 'D'
 
   # toggle: ->
   #   console.log 'PomodoroApp was toggled!'
