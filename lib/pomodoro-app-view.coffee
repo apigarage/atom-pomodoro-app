@@ -12,12 +12,13 @@ class PomodoroAppView
     message.textContent = @timer
     @element.appendChild(message)
 
-  # Returns an object that can be retrieved when package is activated
+
   setTime: (time) ->
     if time.match(/^\d\d:\d\d$/g)
       @timer = startTime
       @element.children[0].textContent = @timer
-
+      
+  # Returns an object that can be retrieved when package is activated
   serialize: ->
 
   # Tear down any state and detach
