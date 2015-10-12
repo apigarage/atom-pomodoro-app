@@ -30,6 +30,7 @@ module.exports = PomodoroApp =
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.commands.add 'atom-workspace', 'atom-pomodoro-app:toggle': => @toggle()
     @subscriptions.add atom.commands.add 'atom-workspace', 'atom-pomodoro-app:stopTimer': => @stopTimer()
+
     # This code will be used for registering commands (using ctrl+shift+p).
     # # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     # @subscriptions = new CompositeDisposable
@@ -50,7 +51,7 @@ module.exports = PomodoroApp =
   consumeStatusBar: (statusBar) ->
     @localStatusBarTile = statusBar.addRightTile(item: this.pomodoroAppView.getElement(), priority: 100)
 
-  toggle: ->
+  toggleTimer: ->
     console.log if @DEBUG and @timerOn then 'Timer off' else 'Timer on'
     @timerOn = if @timerOn then false else true
 

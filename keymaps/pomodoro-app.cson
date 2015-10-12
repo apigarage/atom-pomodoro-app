@@ -10,5 +10,5 @@
 # 'atom-workspace':
 #   'ctrl-alt-o': 'pomodoro-app:toggle'
 'atom-workspace':
-  'ctrl-alt-j': 'atom-pomodoro-app:toggle'
+  'ctrl-alt-j': 'atom-pomodoro-app:toggleTimer'
   'ctrl-alt-k': 'atom-pomodoro-app:stopTimer'
