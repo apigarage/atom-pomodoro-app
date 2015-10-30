@@ -1,37 +1,47 @@
-module.exports =
+module.exports = PomodoroApp =
 class PomodoroAppView
   constructor: (serializedState) ->
     # Create root element
     @element = document.createElement('div')
     @element.classList.add('pomodoro-app')
     @element.classList.add('inline-block')
+
+    # Placeholder for timer buttons
+    # Play/pause button
+    toggleButton = document.createElement('input')
+    toggleButton.id = "toggle"
+    toggleButton.setAttribute("type", "button")
+    toggleButton.setAttribute("value", "Start/Pause")
+    toggleButton.classList.add('inline-block')
+    # toggleButton.addEventListener('click', toggleTimer)
+    toggleButton.style.backgroundColor = 'green'
+    @element.appendChild(toggleButton)
+
+    # Stop button
+    stopButton = document.createElement('input')
+
+    stopButton.setAttribute("type", "button")
+    stopButton.setAttribute("value", "Stop")
+    stopButton.classList.add('inline-block')
+    stopButton.style.backgroundColor = 'red'
+    @element.appendChild(stopButton)
+
+    # Create timer block
     @timer = atom.config.get("atom-pomodoro-app.startTime") + ":" + "00"
-    # Create message element
     message = document.createElement('div')
+    message.style.margin = "0px 3px"
     message.classList.add('inline-block')
     message.id = "timer"
     message.textContent = @timer
     @element.appendChild(message)
 
-    # Placeholder for timer buttons
-    toggleButton = document.createElement('div')
-    toggleButton.classList.add('inline-block')
-    toggleButton.style.backgroundColor = 'green'
-    toggleButton.textContent = "Play/pause"
-    @element.appendChild(toggleButton)
-
-    stopButton = document.createElement('div')
-    stopButton.classList.add('inline-block')
-    stopButton.style.backgroundColor = 'red'
-    stopButton.textContent = "Stop"
-    @element.appendChild(stopButton)
-
-
   setTime: (time) ->
     if time.match(/^\d\d:\d\d$/g)
       @timer = startTime
       @element.children[0].textContent = @timer
-
+    console.log 'time set'
+  test: ->
+    console.log 'test'
   # Returns an object that can be retrieved when package is activated
   serialize: ->
 
