@@ -58,18 +58,14 @@ module.exports = PomodoroApp =
     @localStatusBarTile = statusBar.addRightTile(item: this.pomodoroAppView.getElement(), priority: 100)
 
   toggleTimer: ->
-    console.log if @DEBUG and (@timerState is @timerStateEnum.default or
-                               @timerState is @timerStateEnum.paused)
-                               then 'Timer running' else 'Timer paused'
     @timerState = if (@timerState is @timerStateEnum.default or
                       @timerState is @timerStateEnum.paused)
                       then @timerStateEnum.running else @timerStateEnum.paused
+    if @DEBUG then console.log "Timer "+ @timerState
 
   stopTimer: ->
-    if @DEBUG and (@timerState is @timerStateEnum.running or
-                   @timerState is @timerStateEnum.paused)
-                   then console.log 'Timer off'
     @timerState = @timerStateEnum.default
+    if @DEBUG then console.log "Timer "+ @timerState
 
   # toggle: ->
   #   console.log 'PomodoroApp was toggled!'
