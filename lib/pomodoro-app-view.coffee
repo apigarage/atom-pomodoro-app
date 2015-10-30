@@ -40,8 +40,7 @@ class PomodoroAppView
       @timer = startTime
       @element.children[0].textContent = @timer
     console.log 'time set'
-  test: ->
-    console.log 'test'
+
   # Returns an object that can be retrieved when package is activated
   serialize: ->
 
