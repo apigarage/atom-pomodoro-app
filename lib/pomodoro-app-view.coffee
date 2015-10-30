@@ -13,13 +13,11 @@ class PomodoroAppView
     toggleButton.setAttribute("type", "button")
     toggleButton.setAttribute("value", "Start/Pause")
     toggleButton.classList.add('inline-block')
-    # toggleButton.addEventListener('click', toggleTimer)
     toggleButton.style.backgroundColor = 'green'
     @element.appendChild(toggleButton)
 
     # Stop button
     stopButton = document.createElement('input')
-
     stopButton.setAttribute("type", "button")
     stopButton.setAttribute("value", "Stop")
     stopButton.classList.add('inline-block')

@@ -35,8 +35,8 @@ module.exports = PomodoroApp =
     @subscriptions.add atom.commands.add 'atom-workspace', 'atom-pomodoro-app:toggleTimer': => @toggleTimer()
     @subscriptions.add atom.commands.add 'atom-workspace', 'atom-pomodoro-app:stopTimer': => @stopTimer()
     timerState: @timerStateEnum.default
-    @pomodoroAppView.getElement().getElementsByTagName('input')[0].addEventListener('click', =>@toggleTimer())
-    @pomodoroAppView.getElement().getElementsByTagName('input')[1].addEventListener('click', =>@stopTimer())
+    @pomodoroAppView.getElement().getElementsByTagName('input')[0].addEventListener 'click', =>@toggleTimer()
+    @pomodoroAppView.getElement().getElementsByTagName('input')[1].addEventListener 'click', =>@stopTimer()
     # document.getElementById('toggle').addEventListener('click', ->@setTimer('11:11'))
     # This code will be used for registering commands (using ctrl+shift+p).
     # # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
