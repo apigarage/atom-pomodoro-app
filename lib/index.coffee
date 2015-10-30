@@ -23,15 +23,19 @@ module.exports = PomodoroApp =
   pomodoroAppView: null
   subscriptions: null
   localStatusBarTile: null
-  timerState: 'D'
+  timerStateEnum:
+    default : 'default'
+    running : 'running'
+    paused : 'paused'
+  timerState: null
 
   activate: (state) ->
     @pomodoroAppView = new PomodoroAppView(state.pomodoroAppViewState)
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.commands.add 'atom-workspace', 'atom-pomodoro-app:toggleTimer': => @toggleTimer()
     @subscriptions.add atom.commands.add 'atom-workspace', 'atom-pomodoro-app:stopTimer': => @stopTimer()
-
-    timerState:'D'
+    timerState: @timerStateEnum.default
+    # document.getElementById('toggle').addEventListener('click', ->@setTimer('11:11'))
     # This code will be used for registering commands (using ctrl+shift+p).
     # # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     # @subscriptions = new CompositeDisposable
@@ -53,12 +57,18 @@ module.exports = PomodoroApp =
     @localStatusBarTile = statusBar.addRightTile(item: this.pomodoroAppView.getElement(), priority: 100)
 
   toggleTimer: ->
-    console.log if @DEBUG and (@timerState is 'D' or @timerState is 'P') then 'Timer running' else 'Timer paused'
-    @timerState = if (@timerState is 'D' or @timerState is 'P') then 'R' else 'P'
+    console.log if @DEBUG and (@timerState is @timerStateEnum.default or
+                               @timerState is @timerStateEnum.paused)
+                               then 'Timer running' else 'Timer paused'
+    @timerState = if (@timerState is @timerStateEnum.default or
+                      @timerState is @timerStateEnum.paused)
+                      then @timerStateEnum.running else @timerStateEnum.paused
 
   stopTimer: ->
-    if @DEBUG and (@timerState is 'R' or @timerState is 'P') then console.log 'Timer off'
-    @timerState = 'D'
+    if @DEBUG and (@timerState is @timerStateEnum.running or
+                   @timerState is @timerStateEnum.paused)
+                   then console.log 'Timer off'
+    @timerState = @timerStateEnum.default
 
   # toggle: ->
   #   console.log 'PomodoroApp was toggled!'
