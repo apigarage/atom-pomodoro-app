@@ -35,10 +35,17 @@ class PomodoroAppView
 
   setTime: (time) ->
     if time.match(/^\d\d:\d\d$/g)
-      @timer = startTime
-      @element.children[0].textContent = @timer
+      @element.children[2].textContent = time
     console.log 'time set'
 
+  getTimerContainer: () ->
+    return @element.children[2]
+
+  getStopButton: () ->
+    return @element.children[1]
+
+  getToggleButton: () ->
+    return @element.children[0]
   # Returns an object that can be retrieved when package is activated
   serialize: ->
 
