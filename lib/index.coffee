@@ -1,4 +1,5 @@
 PomodoroAppView = require './pomodoro-app-view'
+Timer = require './timer'
 {CompositeDisposable} = require 'atom'
 
 module.exports = PomodoroApp =
@@ -25,22 +26,17 @@ module.exports = PomodoroApp =
   localStatusBarTile: null
   togleButton: null
   stopButton: null
-  timerStateEnum:
-    default : 'default'
-    running : 'running'
-    paused : 'paused'
-  timerState: null
+  timer: null
 
   activate: (state) ->
     @pomodoroAppView = new PomodoroAppView(state.pomodoroAppViewState)
+    @timer = new Timer(atom.config.get("atom-pomodoro-app.startTime"), @pomodoroAppView.getTimerContainer())
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.commands.add 'atom-workspace', 'atom-pomodoro-app:toggleTimer': => @toggleTimer()
     @subscriptions.add atom.commands.add 'atom-workspace', 'atom-pomodoro-app:stopTimer': => @stopTimer()
-    # Set timer state
-    @timerState = @timerStateEnum.default
-    #
-    @togleButton = @pomodoroAppView.getElement().getElementsByTagName('input')[0]
-    @stopButton = @pomodoroAppView.getElement().getElementsByTagName('input')[1]
+    # Assigning event listeners
+    @togleButton = @pomodoroAppView.getToggleButton()
+    @stopButton = @pomodoroAppView.getStopButton()
     @togleButton.addEventListener 'click', =>@toggleTimer()
     @stopButton.addEventListener 'click', =>@stopTimer()
     @stopButton.disabled = true
@@ -64,18 +60,13 @@ module.exports = PomodoroApp =
     @localStatusBarTile = statusBar.addRightTile(item: this.pomodoroAppView.getElement(), priority: 100)
 
   toggleTimer: ->
-    if (@timerState is @timerStateEnum.default or
-        @timerState is @timerStateEnum.paused)
-          @timerState = @timerStateEnum.running
-    else
-        @timerState = @timerStateEnum.paused
+    @timer.toggle()
     @stopButton.disabled = false
-    if @DEBUG then console.log "Timer "+ @timerState
 
   stopTimer: ->
-    @timerState = @timerStateEnum.default
+    @timer.reset()
     @stopButton.disabled = true
-    if @DEBUG then console.log "Timer "+ @timerState
+
 
   # toggle: ->
   #   console.log 'PomodoroApp was toggled!'
