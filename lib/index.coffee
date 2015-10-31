@@ -23,6 +23,8 @@ module.exports = PomodoroApp =
   pomodoroAppView: null
   subscriptions: null
   localStatusBarTile: null
+  togleButton: null
+  stopButton: null
   timerStateEnum:
     default : 'default'
     running : 'running'
@@ -34,10 +36,14 @@ module.exports = PomodoroApp =
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.commands.add 'atom-workspace', 'atom-pomodoro-app:toggleTimer': => @toggleTimer()
     @subscriptions.add atom.commands.add 'atom-workspace', 'atom-pomodoro-app:stopTimer': => @stopTimer()
-    timerState: @timerStateEnum.default
-    @pomodoroAppView.getElement().getElementsByTagName('input')[0].addEventListener 'click', =>@toggleTimer()
-    @pomodoroAppView.getElement().getElementsByTagName('input')[1].addEventListener 'click', =>@stopTimer()
-    # document.getElementById('toggle').addEventListener('click', ->@setTimer('11:11'))
+    # Set timer state
+    timerState = @timerStateEnum.default
+    #
+    @togleButton = @pomodoroAppView.getElement().getElementsByTagName('input')[0]
+    @stopButton = @pomodoroAppView.getElement().getElementsByTagName('input')[1]
+    @togleButton.addEventListener 'click', =>@toggleTimer()
+    @stopButton.addEventListener 'click', =>@stopTimer()
+    @stopButton.disabled = true
     # This code will be used for registering commands (using ctrl+shift+p).
     # # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     # @subscriptions = new CompositeDisposable
@@ -46,7 +52,7 @@ module.exports = PomodoroApp =
     # @subscriptions.add atom.commands.add 'atom-workspace', 'pomodoro-app:toggle': => @toggle()
 
   deactivate: ->
-    # @subscriptions.dispose()
+    @subscriptions.dispose()
     @pomodoroAppView.destroy() # All hell goes loose
     @statusBarTile?.destroy()
     @statusBarTile = null
@@ -58,13 +64,17 @@ module.exports = PomodoroApp =
     @localStatusBarTile = statusBar.addRightTile(item: this.pomodoroAppView.getElement(), priority: 100)
 
   toggleTimer: ->
-    @timerState = if (@timerState is @timerStateEnum.default or
-                      @timerState is @timerStateEnum.paused)
-                      then @timerStateEnum.running else @timerStateEnum.paused
+    if (@timerState is @timerStateEnum.default or
+        @timerState is @timerStateEnum.paused)
+          @timerState = @timerStateEnum.running
+    else
+        @timerState = @timerStateEnum.paused
+    @stopButton.disabled = false
     if @DEBUG then console.log "Timer "+ @timerState
 
   stopTimer: ->
     @timerState = @timerStateEnum.default
+    @stopButton.disabled = true
     if @DEBUG then console.log "Timer "+ @timerState
 
   # toggle: ->
