@@ -1,44 +1,50 @@
 module.exports = PomodoroApp =
 class Timer
   DEBUG: true
+  # Keeps track of the timer's current state
   timerStateEnum:
     default : 'default'
     running : 'running'
     paused : 'paused'
-  startTime: null
-  tick: null
-  minutes: null
-  container: null
-  milliseconds: null
-  timerState: null
+  startTime: null     # Initial time
+  tick: null          # The interval inbetween times to calculate the change in time
+  minutes: null       # The total amount of miniutes left
+  container: null     # The container to be used for the timer display
+  milliseconds: null  # Time remaining in milliseconds
+  timerState: null    # Current state of the timer
+
   constructor: (minutes, container) ->
     @timerState = @timerStateEnum.default
     @minutes = minutes
-    @milliseconds = minutes * 60 * 1000
+    @milliseconds = minutes * 60 * 1000         # Remaining time in milliseconds
     @container = container
 
+  # Starts the timer
   activate: =>
-    @startTime = new Date().getTime()
+    @startTime = new Date().getTime()           # Set the initial time
     @container.textContent = @minutes + ":00"
-    @tick = setInterval(@increment, 500)
+    @tick = setInterval(@increment, 500)        # Start the timer
 
+  # Pauses the timer
   pause: =>
-    @milliseconds = @increment()
-    clearInterval(@tick)
+    @milliseconds = @increment()                # Save the remaining time
+    clearInterval(@tick)                        # Stops the timer from ticking
 
+  # Resumes the timer
   resume: =>
-    @startTime = new Date().getTime()
-    @tick = setInterval(@increment, 500)
+    @startTime = new Date().getTime()           # Reset the initial time
+    @tick = setInterval(@increment, 500)        # Start ticking again
 
   # Increases
   increment: =>
+    # Calculate new time remaining
     now = Math.max(0, @milliseconds-(new Date().getTime()-@startTime))
     minute = Math.floor(now/60000)
     second = Math.floor(now/1000)%60
     # 5 seconds will be 05 seconds
     second = (if second < 10 then "0" else "") + second
     @container.textContent = minute + ":" + second
-    if ( now == 0 )
+    if ( now == 0 ) # Stop if no time remains, recursive
       clearInterval(@tick)
       @timerState = @timerStateEnum.default
     return now
@@ -53,8 +59,8 @@ class Timer
 
   toggle: =>
     if @timerState is @timerStateEnum.default
-      @timerState = @timerStateEnum.running
-      @activate()
+        @timerState = @timerStateEnum.running
+        @activate()
     else if @timerState is @timerStateEnum.paused
         @timerState = @timerStateEnum.running
         @resume()
