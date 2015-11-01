@@ -1,6 +1,5 @@
 module.exports = PomodoroApp =
 class Timer
-  DEBUG: true
   # Keeps track of the timer's current state
   timerStateEnum:
     default : 'default'
@@ -55,7 +54,6 @@ class Timer
     @container.textContent = @minutes + ":00"
     @milliseconds = @minutes * 60 * 1000
     @timerState = @timerStateEnum.default
-    if @DEBUG then console.log "Timer "+ @timerState
 
   toggle: =>
     if @timerState is @timerStateEnum.default
@@ -67,7 +65,6 @@ class Timer
     else
         @timerState = @timerStateEnum.paused
         @pause()
-    if @DEBUG then console.log "Timer "+ @timerState
 
   getState: =>
     return @timerState

@@ -20,7 +20,6 @@ module.exports = PomodoroApp =
       minimum: 0
       maximum: 60
 
-  DEBUG: true
   pomodoroAppView: null
   subscriptions: null
   localStatusBarTile: null
