@@ -6,9 +6,9 @@ class Timer
     default : 'default'
     running : 'running'
     paused : 'paused'
-  startTime: null     # Initial time
+  startTime: null     # Start time of the current sequence
   tick: null          # The interval inbetween times to calculate the change in time
-  minutes: null       # The total amount of miniutes left
+  minutes: null       # Initial amount of miniutes for the timer to be set to
   container: null     # The container to be used for the timer display
   milliseconds: null  # Time remaining in milliseconds
   timerState: null    # Current state of the timer
@@ -21,7 +21,7 @@ class Timer
 
   # Starts the timer
   activate: =>
-    @startTime = new Date().getTime()           # Set the initial time
+    @startTime = new Date().getTime()           # Set the start point of the current iteration
     @container.textContent = @minutes + ":00"
     @tick = setInterval(@increment, 500)        # Start the timer
 
@@ -32,7 +32,7 @@ class Timer
 
   # Resumes the timer
   resume: =>
-    @startTime = new Date().getTime()           # Reset the initial time
+    @startTime = new Date().getTime()           # Reset the start point
     @tick = setInterval(@increment, 500)        # Start ticking again
 
   # Increases
@@ -44,7 +44,7 @@ class Timer
     # 5 seconds will be 05 seconds
     second = (if second < 10 then "0" else "") + second
     @container.textContent = minute + ":" + second
-    if ( now == 0 ) # Stop if no time remains, recursive
+    if ( now == 0 )                             # Stop if no time remains, recursive
       clearInterval(@tick)
       @timerState = @timerStateEnum.default
     return now
