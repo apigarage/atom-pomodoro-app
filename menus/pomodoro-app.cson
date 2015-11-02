@@ -3,20 +3,24 @@
 #   'atom-text-editor': [
 #     {
 #       'label': 'Toggle pomodoro-app'
-#       'command': 'pomodoro-app:toggle'
+#       'command': 'atom-pomodoro-app:toggle'
 #     }
 #   ]
-# 'menu': [
-#   {
-#     'label': 'Packages'
-#     'submenu': [
-#       'label': 'pomodoro-app'
-#       'submenu': [
-#         {
-#           'label': 'Toggle'
-#           'command': 'pomodoro-app:toggle'
-#         }
-#       ]
-#     ]
-#   }
-# ]
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'pomodoro-app'
+      'submenu': [
+        {
+          'label': 'Toggle Timer'
+          'command': 'atom-pomodoro-app:toggleTimer'
+        },
+        {
+          'label': 'Stop/Reset'
+          'command': 'atom-pomodoro-app:stopTimer'
+        }
+      ]
+    ]
+  }
+]

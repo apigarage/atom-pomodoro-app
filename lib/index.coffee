@@ -1,4 +1,5 @@
 PomodoroAppView = require './pomodoro-app-view'
+Timer = require './timer'
 {CompositeDisposable} = require 'atom'
 
 module.exports = PomodoroApp =
@@ -20,11 +21,24 @@ module.exports = PomodoroApp =
       maximum: 60
 
   pomodoroAppView: null
-  # subscriptions: null
+  subscriptions: null
   localStatusBarTile: null
+  togleButton: null
+  stopButton: null
+  timer: null
+
   activate: (state) ->
     @pomodoroAppView = new PomodoroAppView(state.pomodoroAppViewState)
-
+    @timer = new Timer(atom.config.get("atom-pomodoro-app.startTime"), @pomodoroAppView.getTimerContainer())
+    @subscriptions = new CompositeDisposable
+    @subscriptions.add atom.commands.add 'atom-workspace', 'atom-pomodoro-app:toggleTimer': => @toggleTimer()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'atom-pomodoro-app:stopTimer': => @stopTimer()
+    # Assigning event listeners
+    @togleButton = @pomodoroAppView.getToggleButton()
+    @stopButton = @pomodoroAppView.getStopButton()
+    @togleButton.addEventListener 'click', =>@toggleTimer()
+    @stopButton.addEventListener 'click', =>@stopTimer()
+    @stopButton.disabled = true
     # This code will be used for registering commands (using ctrl+shift+p).
     # # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     # @subscriptions = new CompositeDisposable
@@ -32,10 +46,9 @@ module.exports = PomodoroApp =
     # # Register command that toggles this view
     # @subscriptions.add atom.commands.add 'atom-workspace', 'pomodoro-app:toggle': => @toggle()
 
-
   deactivate: ->
-    # @subscriptions.dispose()
-    @pomodoroAppView.destroy()
+    @subscriptions.dispose()
+    @pomodoroAppView.destroy() # All hell goes loose
     @statusBarTile?.destroy()
     @statusBarTile = null
 
@@ -44,6 +57,15 @@ module.exports = PomodoroApp =
 
   consumeStatusBar: (statusBar) ->
     @localStatusBarTile = statusBar.addRightTile(item: this.pomodoroAppView.getElement(), priority: 100)
+
+  toggleTimer: ->
+    @timer.toggle()
+    @stopButton.disabled = false
+
+  stopTimer: ->
+    @timer.reset()
+    @stopButton.disabled = true
+
 
   # toggle: ->
   #   console.log 'PomodoroApp was toggled!'
