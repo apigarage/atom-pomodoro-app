@@ -46,6 +46,13 @@ class Timer
     if ( now == 0 )                             # Stop if no time remains, recursive
       clearInterval(@tick)
       @timerState = @timerStateEnum.default
+      atom.notifications.addSuccess("Timer completed!")
+      temp = setInterval((=>(
+        @container.style.backgroundColor = "green"
+        setTimeout((=>(@container.style.backgroundColor = "")), 500))
+      ), 1000)
+      setTimeout((->clearInterval(temp)), 5000)
+
     return now
 
   # Used to restore the timer to the default state
